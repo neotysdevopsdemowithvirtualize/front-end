@@ -16,7 +16,7 @@ pipeline {
     stage('build app')
     {
       agent {
-            docker { image 'eliostech/jenkins-slave-nodejs:latest'
+            docker { image 'pcvolkmer/jenkins-slave-nodejs:latest'
               reuseNode true
               }
         }
