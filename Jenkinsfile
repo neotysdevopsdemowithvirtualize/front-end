@@ -13,7 +13,7 @@ pipeline {
   }
   stages {
 
-    stage('build app')
+    /*stage('build app')
     {
       agent {
             docker { image 'heliostech/jenkins-slave-nodejs:latest'
@@ -23,7 +23,7 @@ pipeline {
         steps{
             sh 'npm install'
         }
-    }
+    }*/
     stage('Docker build') {
 
       steps {
