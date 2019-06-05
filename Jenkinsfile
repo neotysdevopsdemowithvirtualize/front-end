@@ -10,7 +10,8 @@ pipeline {
     TAG_DEV = "${TAG}:DEV-${VERSION}"
     TAG_STAGING = "${TAG}-stagging:${VERSION}"
     GROUP="neotysdevopsdemowithvirtualize"
-    VIRTUALIZE_PROXY="soavirt:9080/catalogue"
+  //  VIRTUALIZE_PROXY="soavirt:9080/catalogue"
+    VIRTUALIZE_PROXY="catalogue"
   }
   stages {
 
