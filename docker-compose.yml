@@ -2,7 +2,7 @@ version: '2'
 
 services:
   front-end:
-    image: neotysdevopsdemo/front-end:DEV-0.1
+    image: neotysdevopsdemo/front-end:DEV-VERSION_TO_REPLACE
     hostname: front-end
     restart: always
     cap_drop:
