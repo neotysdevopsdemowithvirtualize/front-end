@@ -7,13 +7,13 @@
   describe("endpoints", function() {
     describe("catalogueUrl", function() {
       it("points to the proper endpoint", function() {
-        expect(endpoints.catalogueUrl).to.equal("http://soavirt:9080/catalogue");
+        expect(endpoints.catalogueUrl).to.equal("http://TOREPLACE_VIRTUALIZE");
       });
     });
 
     describe("tagsUrl", function() {
       it("points to the proper endpoint", function() {
-        expect(endpoints.tagsUrl).to.equal("http://soavirt:9080/catalogue/tags");
+        expect(endpoints.tagsUrl).to.equal("http://TOREPLACE_VIRTUALIZE/tags");
       });
     });
 

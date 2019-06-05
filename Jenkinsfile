@@ -10,6 +10,7 @@ pipeline {
     TAG_DEV = "${TAG}:DEV-${VERSION}"
     TAG_STAGING = "${TAG}-stagging:${VERSION}"
     GROUP="neotysdevopsdemowithvirtualize"
+    VIRTUALIZE_PROXY="soavirt:9080/catalogue"
   }
   stages {
 
@@ -28,6 +29,8 @@ pipeline {
 
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'TOKEN', usernameVariable: 'USER')]) {
+          sh "sed -i 's,TOREPLACE_VIRTUALIZE,${VIRTUALIZE_PROXY},'  $WORKSPACE/test/api/endpoints_test.js"
+          sh "sed -i 's,TOREPLACE_VIRTUALIZE,${VIRTUALIZE_PROXY},'  $WORKSPACE/api/endpoints.js"
           sh "docker build -t ${GROUP}/${APP_NAME}:DEV-0.1 ."
           sh "docker tag ${GROUP}/${APP_NAME}:DEV-0.1 ${TAG_DEV}"
           sh "docker login --username=${USER} --password=${TOKEN}"
