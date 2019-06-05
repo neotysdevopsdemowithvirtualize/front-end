@@ -15,7 +15,7 @@
   });
 
   module.exports = {
-    catalogueUrl:  util.format("http://soavirt:9080/catalogue/", domain),
+    catalogueUrl:  util.format("http://soavirt:9080/catalogue", domain),
     tagsUrl:       util.format("http://soavirt:9080/catalogue/tags", domain),
     cartsUrl:      util.format("http://carts%s/carts", domain),
     ordersUrl:     util.format("http://orders%s", domain),
