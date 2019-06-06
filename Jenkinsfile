@@ -13,6 +13,20 @@ pipeline {
   //  VIRTUALIZE_PROXY="soavirt:9080/catalogue"
     VIRTUALIZE_PROXY="catalogue"
     VIRTUALIZE_SERVICE="catalogue%s"
+    ARTEFACT_ID = "sockshop-" + "${env.APP_NAME}"
+    TAG_STAGING = "${TAG}-stagging:${VERSION}"
+    DYNATRACEID="${env.DT_ACCOUNTID}.live.dynatrace.com"
+    DYNATRACEAPIKEY="${env.DT_API_TOKEN}"
+    NLAPIKEY="${env.NL_WEB_API_KEY}"
+    NL_DT_TAG="app:${env.APP_NAME},environment:staging"
+    OUTPUTSANITYCHECK="$WORKSPACE/infrastructure/sanitycheck.json"
+    NEOLOAD_ASCODEFILE="$WORKSPACE/test/neoload/Frontend_neoload.yaml"
+    NEOLOAD_ANOMALIEDETECTIONFILE="$WORKSPACE/monspec/front-end_monspec.json"
+    BASICCHECKURI="health"
+    TAGURI="tags"
+    GROUP = "neotysdevopsdemo"
+    COMMIT = "DEV-${VERSION}"
+    HOST="ec2-54-229-141-49.eu-west-1.compute.amazonaws.com"
   }
   stages {
 
@@ -37,6 +51,8 @@ pipeline {
           sh "docker tag ${GROUP}/${APP_NAME}:DEV-0.1 ${TAG_DEV}"
           sh "docker login --username=${USER} --password=${TOKEN}"
           sh "docker push ${TAG_DEV}"
+          sh "docker tag ${TAG_DEV} ${TAG_STAGING}"
+          sh "docker push ${TAG_STAGING}"
         }
 
       }
@@ -51,6 +67,13 @@ pipeline {
         }
 
     }
+     stage('Launch Ranorex script') {
+
+                  steps {
+                      sh 'df -h'
+                  }
+
+              }
     stage('Start NeoLoad infrastructure') {
 
               steps {
@@ -60,7 +83,38 @@ pipeline {
 
           }
 
+     stage('Run load test') {
+            agent {
+                dockerfile {
+                    args '--user root -v /tmp:/tmp --network=catalogue_master_default'
+                    dir 'infrastructure/infrastructure/neoload/controller/'
+                }
+            }
+            steps {
 
+                     sh "sed -i 's/HOST_TO_REPLACE/${HOST}/'  $WORKSPACE/test/neoload/Frontend_neoload.yaml"
+                     sh "sed -i 's/PORT_TO_REPLACE/80/' $WORKSPACE/test/neoload/Frontend_neoload.yaml"
+                     sh "sed -i 's/DTID_TO_REPLACE/${DYNATRACEID}/' $WORKSPACE/test/neoload/Frontend_neoload.yaml"
+                     sh "sed -i 's/APIKEY_TO_REPLACE/${DYNATRACEAPIKEY}/'  $WORKSPACE/test/neoload/Frontend_neoload.yaml"
+                     sh "sed -i 's,JSONFILE_TO_REPLACE,$WORKSPACE/monspec/catalogue_anomalieDection.json,'  $WORKSPACE/test/neoload/Frontend_neoload.yaml"
+                     sh "sed -i 's/TAGS_TO_REPLACE/${NL_DT_TAG}/' $WORKSPACE/test/neoload/Frontend_neoload.yaml"
+                     sh "sed -i 's,OUTPUTFILE_TO_REPLACE,$WORKSPACE/infrastructure/sanitycheck.json,'  $WORKSPACE/test/neoload/Frontend_neoload.yaml"
+
+                      script {
+                          neoloadRun executable: '/home/neoload/neoload/bin/NeoLoadCmd',
+                                  project: "$WORKSPACE/test/neoload/load_template/load_template.nlp",
+                                  testName: 'Stage_load_${VERSION}_${BUILD_NUMBER}',
+                                  testDescription: 'Stage_load_${VERSION}_${BUILD_NUMBER}',
+                                  commandLineOption: "-project  $WORKSPACEtest/neoload/Frontend_neoload.yaml -nlweb -L Population_Buyer=$WORKSPACE/infrastructure/infrastructure/neoload/lg/remote.txt -L Population_Dynatrace_Integration=$WORKSPACE/infrastructure/infrastructure/neoload/lg/local.txt -nlwebToken $NLAPIKEY -variables host=catalogue,port=80",
+                                  scenario: 'FrontEndLoad', sharedLicense: [server: 'NeoLoad Demo License', duration: 2, vuCount: 200],
+                                  trendGraphs: [
+                                          [name: 'Limit test Catalogue API Response time', curve: ['CatalogueList>Actions>Get Catalogue List'], statistic: 'average'],
+                                          'ErrorRate'
+                                  ]
+                      }
+
+                  }
+                }
 
   /*  stage('DT Deploy Event') {
         when {

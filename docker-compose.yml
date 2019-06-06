@@ -2,14 +2,14 @@ version: '2'
 
 services:
   front-end:
-    image: neotysdevopsdemo/front-end:DEV-VERSION_TO_REPLACE
+    image: neotysdevopsdemo/front-end:stagging-VERSION_TO_REPLACE
     hostname: front-end
     restart: always
     cap_drop:
     - all
     read_only: true
     environment:
-    - DT_CUSTOM_PROP=app=front-end environment=dev
+    - DT_CUSTOM_PROP=app=front-end environment=staging
   edge-router:
     image: neotysdevopsdemo/edge-router:0.1
     ports:
@@ -25,13 +25,13 @@ services:
     - DAC_OVERRIDE
     read_only: true
     environment:
-    - DT_CUSTOM_PROP=app=edge-router environment=dev
+    - DT_CUSTOM_PROP=app=edge-router environment=staging
     tmpfs:
     - /var/run:rw,noexec,nosuid
     hostname: edge-router
     restart: always
   catalogue:
-    image: neotysdevopsdemo/catalogue:DEV-VERSION_TO_REPLACE
+    image: neotysdevopsdemo/catalogue:stagging-VERSION_TO_REPLACE
     hostname: catalogue
     restart: always
     cap_drop:
@@ -40,13 +40,13 @@ services:
     - NET_BIND_SERVICE
     read_only: true
     environment:
-    - DT_CUSTOM_PROP=app=catalogue environment=dev
+    - DT_CUSTOM_PROP=app=catalogue environment=staging
   catalogue-db:
-    image: neotysdevopsdemo/catalogue-db:DEV-VERSION_TO_REPLACE
+    image: neotysdevopsdemo/catalogue-db:stagging-VERSION_TO_REPLACE
     hostname: catalogue-db
     restart: always
     environment:
-    - DT_CUSTOM_PROP=app=catalogue-db environment=dev
+    - DT_CUSTOM_PROP=app=catalogue-db environment=staging
     - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     - MYSQL_ALLOW_EMPTY_PASSWORD=true
     - MYSQL_DATABASE=socksdb
@@ -63,7 +63,7 @@ services:
     - /tmp:rw,noexec,nosuid
     environment:
     - JAVA_OPTS=-Xms64m -Xmx128m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom -Dspring.zipkin.enabled=false
-    - DT_CUSTOM_PROP=app=carts environment=dev
+    - DT_CUSTOM_PROP=app=carts environment=staging
   carts-db:
     image: mongo:3.4
     hostname: carts-db
@@ -76,11 +76,11 @@ services:
     - SETUID
     read_only: true
     environment:
-    - DT_CUSTOM_PROP=app=carts-db environment=dev
+    - DT_CUSTOM_PROP=app=carts-db environment=staging
     tmpfs:
     - /tmp:rw,noexec,nosuid
   orders:
-    image: neotysdevopsdemo/orders:DEV-VERSION_TO_REPLACE
+    image: neotysdevopsdemo/orders:stagging-VERSION_TO_REPLACE
     hostname: orders
     restart: always
     cap_drop:
@@ -92,7 +92,7 @@ services:
     - /tmp:rw,noexec,nosuid
     environment:
     - JAVA_OPTS=-Xms64m -Xmx128m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom -Dspring.zipkin.enabled=false
-    - DT_CUSTOM_PROP=app=orders environment=dev
+    - DT_CUSTOM_PROP=app=orders environment=staging
   orders-db:
     image: mongo:3.4
     hostname: orders-db
@@ -105,11 +105,11 @@ services:
     - SETUID
     read_only: true
     environment:
-    - DT_CUSTOM_PROP=app=orders-db environment=dev
+    - DT_CUSTOM_PROP=app=orders-db environment=staging
     tmpfs:
     - /tmp:rw,noexec,nosuid
   shipping:
-    image: neotysdevopsdemo/shipping:DEV-VERSION_TO_REPLACE
+    image: neotysdevopsdemo/shipping:stagging-VERSION_TO_REPLACE
     hostname: shipping
     restart: always
     cap_drop:
@@ -121,9 +121,9 @@ services:
     - /tmp:rw,noexec,nosuid
     environment:
     - JAVA_OPTS=-Xms64m -Xmx128m -XX:+UseG1GC -Djava.security.egd=file:/dev/urandom -Dspring.zipkin.enabled=false
-    - DT_CUSTOM_PROP=app=shipping environment=dev
+    - DT_CUSTOM_PROP=app=shipping environment=staging
   queue-master:
-    image: neotysdevopsdemo/queue-master:DEV-VERSION_TO_REPLACE
+    image: neotysdevopsdemo/queue-master:stagging-VERSION_TO_REPLACE
     hostname: queue-master
     volumes:
     - /var/run/docker.sock:/var/run/docker.sock
@@ -134,7 +134,7 @@ services:
     - NET_BIND_SERVICE
     read_only: true
     environment:
-    - DT_CUSTOM_PROP=app=queue-master environment=dev
+    - DT_CUSTOM_PROP=app=queue-master environment=staging
     tmpfs:
     - /tmp:rw,noexec,nosuid
   rabbitmq:
@@ -150,18 +150,18 @@ services:
     - DAC_OVERRIDE
     read_only: true
   payment:
-    image: neotysdevopsdemo/payment:DEV-VERSION_TO_REPLACE
+    image: neotysdevopsdemo/payment:stagging-VERSION_TO_REPLACE
     hostname: payment
     restart: always
     cap_drop:
     - all
     environment:
-    - DT_CUSTOM_PROP=app=payment environment=dev
+    - DT_CUSTOM_PROP=app=payment environment=staging
     cap_add:
     - NET_BIND_SERVICE
     read_only: true
   user:
-    image: neotysdevopsdemo/user:DEV-VERSION_TO_REPLACE
+    image: neotysdevopsdemo/user:stagging-VERSION_TO_REPLACE
     hostname: user
     restart: always
     cap_drop:
@@ -171,9 +171,9 @@ services:
     read_only: true
     environment:
     - MONGO_HOST=user-db:27017
-    - DT_CUSTOM_PROP=app=user environment=dev
+    - DT_CUSTOM_PROP=app=user environment=staging
   user-db:
-    image: neotysdevopsdemo/user-db:DEV-VERSION_TO_REPLACE
+    image: neotysdevopsdemo/user-db:stagging-VERSION_TO_REPLACE
     hostname: user-db
     restart: always
     cap_drop:
@@ -183,7 +183,7 @@ services:
     - SETGID
     - SETUID
     environment:
-    - DT_CUSTOM_PROP=app=user-db environment=dev
+    - DT_CUSTOM_PROP=app=user-db environment=staging
     read_only: true
     tmpfs:
     - /tmp:rw,noexec,nosuid
