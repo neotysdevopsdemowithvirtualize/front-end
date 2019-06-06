@@ -24,7 +24,6 @@ pipeline {
     NEOLOAD_ANOMALIEDETECTIONFILE="$WORKSPACE/monspec/front-end_monspec.json"
     BASICCHECKURI="health"
     TAGURI="tags"
-    GROUP = "neotysdevopsdemo"
     COMMIT = "DEV-${VERSION}"
     HOST="ec2-54-229-141-49.eu-west-1.compute.amazonaws.com"
   }
