@@ -51,7 +51,7 @@ services:
     - MYSQL_ALLOW_EMPTY_PASSWORD=true
     - MYSQL_DATABASE=socksdb
   carts:
-    image: neotysdevopsdemo/carts-stagging:DEV-VERSION_TO_REPLACE
+    image: neotysdevopsdemo/carts-stagging:VERSION_TO_REPLACE
     hostname: carts
     restart: always
     cap_drop:
