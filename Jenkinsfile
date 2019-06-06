@@ -86,7 +86,7 @@ pipeline {
      stage('Run load test') {
             agent {
                 dockerfile {
-                    args '--user root -v /tmp:/tmp --network=catalogue_master_default'
+                    args '--user root -v /tmp:/tmp --network=parasoft'
                     dir 'infrastructure/infrastructure/neoload/controller/'
                 }
             }
