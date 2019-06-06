@@ -69,6 +69,7 @@ pipeline {
 
                   steps {
                       sh 'df -h'
+                       sleep 90
                   }
 
               }
