@@ -104,7 +104,7 @@ pipeline {
                                   project: "$WORKSPACE/test/neoload/load_template/load_template.nlp",
                                   testName: 'Stage_load_${VERSION}_${BUILD_NUMBER}',
                                   testDescription: 'Stage_load_${VERSION}_${BUILD_NUMBER}',
-                                  commandLineOption: "-project  $WORKSPACEtest/neoload/Frontend_neoload.yaml -nlweb -L Population_Buyer=$WORKSPACE/infrastructure/infrastructure/neoload/lg/remote.txt -L Population_Dynatrace_Integration=$WORKSPACE/infrastructure/infrastructure/neoload/lg/local.txt -nlwebToken $NLAPIKEY -variables host=catalogue,port=80",
+                                  commandLineOption: "-project  $WORKSPACE/test/neoload/Frontend_neoload.yaml -nlweb -L Population_Buyer=$WORKSPACE/infrastructure/infrastructure/neoload/lg/remote.txt -L Population_Dynatrace_Integration=$WORKSPACE/infrastructure/infrastructure/neoload/lg/local.txt -nlwebToken $NLAPIKEY -variables host=catalogue,port=80",
                                   scenario: 'FrontEndLoad', sharedLicense: [server: 'NeoLoad Demo License', duration: 2, vuCount: 200],
                                   trendGraphs: [
                                           [name: 'Limit test Catalogue API Response time', curve: ['CatalogueList>Actions>Get Catalogue List'], statistic: 'average'],
