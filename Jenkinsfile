@@ -14,7 +14,6 @@ pipeline {
     VIRTUALIZE_PROXY="catalogue"
     VIRTUALIZE_SERVICE="catalogue%s"
     ARTEFACT_ID = "sockshop-" + "${env.APP_NAME}"
-    TAG_STAGING = "${TAG}-stagging:${VERSION}"
     DYNATRACEID="${env.DT_ACCOUNTID}.live.dynatrace.com"
     DYNATRACEAPIKEY="${env.DT_API_TOKEN}"
     NLAPIKEY="${env.NL_WEB_API_KEY}"
