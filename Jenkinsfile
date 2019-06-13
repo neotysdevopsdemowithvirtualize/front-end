@@ -83,7 +83,7 @@ pipeline {
 
           }
 
-     stage('Run load test') {
+    /* stage('Run load test') {
             agent {
                 dockerfile {
                     args '--user root -v /tmp:/tmp --network=parasoft'
@@ -114,7 +114,7 @@ pipeline {
                       }
 
                   }
-                }
+                }*/
 
   /*  stage('DT Deploy Event') {
         when {
