@@ -12,6 +12,10 @@ pipeline {
     GROUP="neotysdevopsdemowithvirtualize"
     VIRTUALIZE_PROXY="soavirt:9080/para_catalogue"
     VIRTUALIZE_SERVICE="soavirt:9080/para_catalogue"
+    //VIRTUALIZE_CART_PROXY="carts"
+   // VIRTUALIZE_CART_SERVICE="carts%s"
+    VIRTUALIZE_CART_PROXY="soavirt:9080/para_cart"
+    VIRTUALIZE_CART_SERVICE="soavirt:9080/para_cart"
     //VIRTUALIZE_PROXY="catalogue"
     //VIRTUALIZE_SERVICE="catalogue%s"
     ARTEFACT_ID = "sockshop-" + "${env.APP_NAME}"
@@ -44,6 +48,8 @@ pipeline {
 
       steps {
         withCredentials([usernamePassword(credentialsId: 'dockerHub', passwordVariable: 'TOKEN', usernameVariable: 'USER')]) {
+          sh "sed -i 's,TOREPLACE_VIRTUALIZE_CART_SERVICE,${VIRTUALIZE_CART_PROXY},'  $WORKSPACE/test/api/endpoints_test.js"
+          sh "sed -i 's,TOREPLACE_VIRTUALIZE_CART_SERVICE,${VIRTUALIZE_CART_SERVICE},'  $WORKSPACE/api/endpoints.js"
           sh "sed -i 's,TOREPLACE_VIRTUALIZE,${VIRTUALIZE_PROXY},'  $WORKSPACE/test/api/endpoints_test.js"
           sh "sed -i 's,TOREPLACE_VIRTUALIZE,${VIRTUALIZE_SERVICE},'  $WORKSPACE/api/endpoints.js"
           sh "docker build -t ${GROUP}/${APP_NAME}:DEV-0.1 ."

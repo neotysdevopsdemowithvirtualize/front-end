@@ -17,7 +17,7 @@
   module.exports = {
     catalogueUrl:  util.format("http://TOREPLACE_VIRTUALIZE", domain),
     tagsUrl:       util.format("http://TOREPLACE_VIRTUALIZE/tags", domain),
-    cartsUrl:      util.format("http://carts%s/carts", domain),
+    cartsUrl:      util.format("http://TOREPLACE_VIRTUALIZE_CART_SERVICE/carts", domain),
     ordersUrl:     util.format("http://orders%s", domain),
     customersUrl:  util.format("http://user%s/customers", domain),
     addressUrl:    util.format("http://user%s/addresses", domain),

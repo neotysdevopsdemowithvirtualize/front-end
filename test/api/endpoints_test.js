@@ -19,7 +19,7 @@
 
     describe("cartsUrl", function() {
       it("points to the proper endpoint", function() {
-        expect(endpoints.cartsUrl).to.equal("http://carts/carts");
+        expect(endpoints.cartsUrl).to.equal("http://TOREPLACE_VIRTUALIZE_CART_SERVICE/carts");
       });
     });
 
