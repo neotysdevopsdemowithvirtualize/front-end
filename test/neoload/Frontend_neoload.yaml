@@ -29,6 +29,7 @@ variables:
     value: TAGS_TO_REPLACE
 scenarios:
 - name: FrontEndLoad
+  sla_profile: FrontSlaProfile
   populations:
   - name: Population_Buyer
     constant_load:
