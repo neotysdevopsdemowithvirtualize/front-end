@@ -33,7 +33,7 @@ scenarios:
   populations:
   - name: Population_Buyer
     constant_load:
-      users: 49
+      users: 20
       duration: 5m
       rampup: 30s
   - name: Population_Dynatrace_Integration
