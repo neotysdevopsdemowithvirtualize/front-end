@@ -72,7 +72,7 @@ pipeline {
         }
 
     }
-     stage('Launch Ranorex script') {
+     stage('Launch Selenium script') {
 
                   steps {
                       sh 'df -h'
