@@ -29,7 +29,7 @@ pipeline {
     BASICCHECKURI="health"
     TAGURI="tags"
     COMMIT = "DEV-${VERSION}"
-    HOST="ec2-54-229-141-49.eu-west-1.compute.amazonaws.com"
+    HOST="ec2-34-249-248-141.eu-west-1.compute.amazonaws.com"
   }
   stages {
 
